@@ -12,13 +12,6 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
-
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -64,3 +57,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+apiImageName: "otomato/maskshop-api"
+apiImageTag: "0.1"
+frontImageName: "otomato/maskshop-front"
+frontImageTag: "0.1"
+mongoImageName: "mongo"
+mongoImageTag: "4.2.3"

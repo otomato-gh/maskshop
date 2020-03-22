@@ -15,5 +15,5 @@ spec:
         app: mongo
     spec:
       containers:
-      - image: mongo:4.2.3
+      - image: "{{ .Values.mongoImageName }}:{{ .Values.mongoImageTag }}""
         name: mongo
