@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  mongo:
+    image: mongo
+  api:
+    build: ./api
+    ports:
+    - 8888:80
+  front:
+    build: ./front
+    ports:
+    - 8880:80
+    volumes:
+    - "/Users/anton.weiss/git/maskshop/front:/usr/src/app"

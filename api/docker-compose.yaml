@@ -1,0 +1,8 @@
+version: "2.1"
+services:
+  mongo:
+    image: mongo
+  api:
+    image: maskshop-api
+    ports:
+    - 8888:80
