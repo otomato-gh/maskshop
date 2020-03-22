@@ -15,5 +15,5 @@ spec:
         app: api
     spec:
       containers:
-      - image: otomato/maskshop-api:0.1
+      - image: "{{ .Values.apiImageName }}:{{ .Values.apiImageTag }}"
         name: api
