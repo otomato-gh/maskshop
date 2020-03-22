@@ -4,11 +4,13 @@ services:
     image: mongo
   api:
     build: ./api
+    image: otomato/maskshop-api:${TAG-latest}
     ports:
     - 8888:80
   front:
     build: ./front
+    image: otomato/maskshop-front:${TAG-latest}
+    environment:
+      - INITDB=true
     ports:
     - 8880:80
-    volumes:
-    - "/Users/anton.weiss/git/maskshop/front:/usr/src/app"

@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for
 import requests
+from requests.adapters import HTTPAdapter
 import json
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, DecimalField, FileField
 from wtforms.validators import DataRequired, InputRequired, Email, Length
-import os
+import os, time
 
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ app.config.from_object('version')
 app.config.from_object('init')
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
+app.config['INITDB'] = os.getenv('INITDB')
 
 
 from flask_bootstrap import Bootstrap
@@ -90,7 +92,7 @@ def submit():
     return response
 
 @app.route('/')
-def main():
+def home():
     headers = getForwardHeaders(request)
     user = request.cookies.get("user", "")
     form = MyForm()
@@ -110,12 +112,19 @@ def main():
 
 
 def run_app():
-    for mask in app.config['INIT_ITEMS']:
-        print("Inserting "+json.dumps(mask))
-        r = requests.post("http://api/mask",
-                        json = mask,
-                        headers = {'content-type':'application/json'})
-        print(r.text)
+    if app.config['INITDB'] == 'true':
+        print("Waiting for the api to become available")
+        # dirty workaround to allow api to come up
+        time.sleep(5)
+        s = requests.Session()
+        s.mount('http://api/mask', HTTPAdapter(max_retries=5))
+        for mask in app.config['INIT_ITEMS']:
+            print("Inserting "+json.dumps(mask))
+            #now try to init
+            r = requests.post("http://api/mask",
+                            json = mask,
+                            headers = {'content-type':'application/json'})
+            print(r.text)
     app.run(host='0.0.0.0', port=app.config['PORT'], debug=True)
 
 if __name__ == '__main__':
