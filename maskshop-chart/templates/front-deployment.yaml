@@ -17,3 +17,6 @@ spec:
       containers:
       - image: otomato/maskshop-front:0.1
         name: front
+        env:
+          - name: INITDB
+             value: "true"
