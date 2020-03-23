@@ -4,7 +4,7 @@ from requests.adapters import HTTPAdapter
 import json
 from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, DecimalField, FileField
+from wtforms import StringField, PasswordField, BooleanField, DecimalField, FileField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, Email, Length
 import os, time
 
@@ -27,6 +27,7 @@ class MyForm(FlaskForm):
     type = StringField('type', validators=[DataRequired()])
     price = DecimalField('price', validators=[DataRequired()])
     picture = FileField('picture')
+    submit = SubmitField(label='Add')
 
 def getForwardHeaders(request):
     headers = {}
