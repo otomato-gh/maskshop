@@ -40,15 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build image
-        run: docker build . --file Dockerfile --tag image
-
-      - name: Log into registry
-        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u ${{ github.actor }} --password-stdin
-
-      - name: Push image
+      - name: Calculate tag
         run: |
-          # Strip git ref prefix from version
           TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           # Strip "v" prefix from tag name
@@ -56,7 +49,11 @@ jobs:
 
           # Use Docker `latest` tag convention
           [ "$TAG" == "master" ] && TAG=latest
+      - name: Build image
+        run: docker-compose build
 
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u ${{ github.actor }} --password-stdin
 
-          docker-compose build
-          docker-compose push
+      - name: Push image
+        run: docker-compose push
