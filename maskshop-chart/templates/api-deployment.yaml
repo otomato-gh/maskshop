@@ -17,3 +17,6 @@ spec:
       containers:
       - image: "{{ .Values.apiImageName }}:{{ .Values.apiImageTag }}"
         name: api
+        resources:
+          requests:
+            cpu: 0.5

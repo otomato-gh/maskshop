@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: api
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: api
+  template:
+    metadata:
+      labels:
+        run: api
+    spec:
+      containers:
+      - image: otomato/maskshop-api:0.1
+        imagePullPolicy: IfNotPresent
+        name: api
+        resources:
+          requests:
+            cpu: 1.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: front
+  name: front
+spec:
+  selector:
+    matchLabels:
+      run: front
+  template:
+    metadata:
+      labels:
+        run: front
+    spec:
+      containers:
+      - image: otomato/maskshop-front:0.1
+        imagePullPolicy: IfNotPresent
+        name: front
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: mongo
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mongo
+  template:
+    metadata:
+      labels:
+        run: mongo
+    spec:
+      containers:
+      - command:
+        - mongod
+        - --bind_ip
+        - 0.0.0.0
+        image: mongo
+        imagePullPolicy: Always
+        name: mongo
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: api
+  name: api
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: api
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: mongo
+  name: mongo
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    run: mongo
+  sessionAffinity: None
+  type: ClusterIP

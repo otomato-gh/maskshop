@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2020-03-24T12:36:39Z"
+  labels:
+    app: mongo
+  name: mongo
+  namespace: default
+  resourceVersion: "44844"
+  selfLink: /api/v1/namespaces/default/services/mongodb
+  uid: dc758b7b-6262-4f83-8a80-53ea31048452
+spec:
+  clusterIP: 172.21.122.118
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: mongo
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

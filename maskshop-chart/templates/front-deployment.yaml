@@ -18,5 +18,7 @@ spec:
       - image: "{{ .Values.frontImageName }}:{{ .Values.frontImageTag }}"
         name: front
         env:
-          - name: INITDB
-            value: "true"
+        - name: INITDB
+          value: "true"
+      nodeSelector:
+        type: web
