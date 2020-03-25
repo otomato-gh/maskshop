@@ -19,4 +19,4 @@ spec:
         name: front
         env:
           - name: INITDB
-             value: "true"
+            value: "true"
