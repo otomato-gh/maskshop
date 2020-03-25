@@ -38,8 +38,8 @@ tolerations: []
 affinity: {}
 
 apiImageName: "otomato/maskshop-api"
-apiImageTag: "0.1"
+apiImageTag: "0.2"
 frontImageName: "otomato/maskshop-front"
-frontImageTag: "0.1"
+frontImageTag: "0.2"
 mongoImageName: "mongo"
 mongoImageTag: "4.2.3"
