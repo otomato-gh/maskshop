@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: "{{ .Values.frontImageName }}:{{ .Values.frontImageTag }}"
+        imagePullPolicy: Always
         name: front
         env:
         - name: INITDB
