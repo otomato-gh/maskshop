@@ -5,7 +5,7 @@
 - based on python:alpine
 - set working directory to /app
 - copy all files to /app directory
-- move settings.prod.py to settgins.py
+- move settings.prod.py to settings.py
 - install dependencies by running `pip install -r requirements.txt`
 - set environment variable INITDB to `true`
 - create user 'appuser' (adduser -D appuser)
