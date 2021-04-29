@@ -22,3 +22,9 @@ Exercise:
 - Change the composition to use your DockerHub images.
 
 - Rerun the composition, verify it still works.
+
+## Bonus Points
+Create another compose file: **docker-compose-dev.yml**
+- Use **python:alpine** image for **api** and **front**
+- Mount the python code from your workspace with [volumes](https://docs.docker.com/compose/compose-file/compose-file-v3/#volumes)
+- Run `pip install -r requirements.txt && python api.py` as the command by using [command](https://docs.docker.com/compose/compose-file/compose-file-v3/#command)
