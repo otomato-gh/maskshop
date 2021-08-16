@@ -1,0 +1,8 @@
+image:
+  repository: otomato/maskshop-front
+  tag: latest
+
+service:
+  type: NodePort
+  port: 8880
+  targetPort: 80

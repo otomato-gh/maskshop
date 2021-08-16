@@ -1,0 +1,8 @@
+image:
+  repository: mongo
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 27017
+  targetPort: 27017
