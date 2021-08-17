@@ -1,5 +1,8 @@
 replicaCount: 1
-
+appsVars:
+  appNameMongo: mongo
+  appNameFront: front
+  appNameApi: api
 image:
   pullPolicy: IfNotPresent
 imagePullSecrets: []
@@ -16,19 +19,6 @@ podAnnotations: {}
 podSecurityContext: {}
 
 securityContext: {}
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-
-resources: {}
 
 autoscaling:
   enabled: false

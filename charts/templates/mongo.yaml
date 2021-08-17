@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameMongo }}
+  name: {{ .Values.appsVars.appNameMongo }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appsVars.appNameMongo }}
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: {{ .Values.appsVars.appNameMongo }}
+    spec:
+      containers:
+        - image: "mongo:latest"
+          name: {{ .Values.appsVars.appNameMongo }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 27017
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameMongo }}
+  name: {{ .Values.appsVars.appNameMongo }}
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: {{ .Values.appsVars.appNameMongo }}
+  type: ClusterIP

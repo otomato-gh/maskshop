@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameFront }}
+  name: {{ .Values.appsVars.appNameFront }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appsVars.appNameFront }}
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: {{ .Values.appsVars.appNameFront }}
+    spec:
+      containers:
+        - image: "otomato/maskshop-front:latest"
+          name: {{ .Values.appsVars.appNameFront }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameFront }}
+  name: {{ .Values.appsVars.appNameFront }}
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: {{ .Values.appsVars.appNameFront }}
+  type: NodePort
+

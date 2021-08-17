@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameApi }}
+  name: {{ .Values.appsVars.appNameApi }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appsVars.appNameApi }}
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: {{ .Values.appsVars.appNameApi }}
+    spec:
+      containers:
+        - image: "otomato/maskshop-api:latest"
+          name: {{ .Values.appsVars.appNameApi }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.appsVars.appNameApi }}
+  name: {{ .Values.appsVars.appNameApi }}
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: {{ .Values.appsVars.appNameApi }}
+  type: ClusterIP
