@@ -4,7 +4,7 @@ Usage:
 ```shell
 kubectl create ns maskshop
 kns maskshop
-git clone https://gitlab.com/mondbev/maskshop-helm.git
-cd maskshop-helm
+git clone https://github.com/mondbev1/maskshop.git
+cd maskshop
 for COMPONENT in mongo api front; do helm upgrade $COMPONENT maskshop --install --values=$COMPONENT.yaml; done
 ```
