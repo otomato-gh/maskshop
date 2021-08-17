@@ -16,12 +16,12 @@ spec:
         app: {{ .Values.appsVars.appNameMongo }}
     spec:
       containers:
-        - image: "mongo:latest"
+        - image: "{{ .Values.appsImages.appRepoMongo }}:{{ .Values.appsImages.appRepoTagMongo }}"
           name: {{ .Values.appsVars.appNameMongo }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 27017
+              containerPort: {{ .Values.appsVars.appPortMongo }}
               protocol: TCP
 ---
 apiVersion: v1
@@ -32,9 +32,9 @@ metadata:
   name: {{ .Values.appsVars.appNameMongo }}
 spec:
   ports:
-  - port: 27017
+  - port: {{ .Values.appsVars.appPortMongo }}
     protocol: TCP
-    targetPort: 27017
+    targetPort: {{ .Values.appsVars.appPortMongo }}
   selector:
     app: {{ .Values.appsVars.appNameMongo }}
   type: ClusterIP

@@ -16,12 +16,12 @@ spec:
         app: {{ .Values.appsVars.appNameApi }}
     spec:
       containers:
-        - image: "otomato/maskshop-api:latest"
+        - image: "{{ .Values.appsImages.appRepoApi }}:{{ .Values.appsImages.appRepoTagApi }}"
           name: {{ .Values.appsVars.appNameApi }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.appsVars.appPortApi }}
               protocol: TCP
 ---
 apiVersion: v1
@@ -32,9 +32,9 @@ metadata:
   name: {{ .Values.appsVars.appNameApi }}
 spec:
   ports:
-  - port: 80
+  - port: {{ .Values.appsVars.appPortApi }}
     protocol: TCP
-    targetPort: 80
+    targetPort: {{ .Values.appsVars.appPortApi }}
   selector:
     app: {{ .Values.appsVars.appNameApi }}
   type: ClusterIP

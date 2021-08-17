@@ -3,6 +3,16 @@ appsVars:
   appNameMongo: mongo
   appNameFront: front
   appNameApi: api
+  appPortMongo: 27017
+  appPortFront: 80
+  appPortApi: 80
+appsImages:
+  appRepoMongo: mongo
+  appRepoTagMongo: latest
+  appRepoFront: otomato/maskshop-front
+  appRepoTagFront: latest
+  appRepoApi: otomato/maskshop-api
+  appRepoTagApi: latest
 image:
   pullPolicy: IfNotPresent
 imagePullSecrets: []

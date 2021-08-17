@@ -16,12 +16,12 @@ spec:
         app: {{ .Values.appsVars.appNameFront }}
     spec:
       containers:
-        - image: "otomato/maskshop-front:latest"
+        - image: "{{ .Values.appsImages.appRepoFront }}:{{ .Values.appsImages.appRepoTagFront }}"
           name: {{ .Values.appsVars.appNameFront }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.appsVars.appPortFront }}
               protocol: TCP
 ---
 apiVersion: v1
@@ -32,9 +32,9 @@ metadata:
   name: {{ .Values.appsVars.appNameFront }}
 spec:
   ports:
-  - port: 80
+  - port: {{ .Values.appsVars.appPortFront }}
     protocol: TCP
-    targetPort: 80
+    targetPort: {{ .Values.appsVars.appPortFront }}
   selector:
     app: {{ .Values.appsVars.appNameFront }}
   type: NodePort
