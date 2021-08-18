@@ -2,39 +2,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameApi }}
-  name: {{ .Values.appsVars.appNameApi }}
+    app: {{ .Values.api.appname }}
+  name: {{ .Values.api.appname }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.appsVars.appNameApi }}
+      app: {{ .Values.api.appname }}
   template:
     metadata:
       annotations:
       labels:
-        app: {{ .Values.appsVars.appNameApi }}
+        app: {{ .Values.api.appname }}
     spec:
       containers:
-        - image: "{{ .Values.appsImages.appRepoApi }}:{{ .Values.appsImages.appRepoTagApi }}"
-          name: {{ .Values.appsVars.appNameApi }}
+        - image: "{{ .Values.api.image }}:{{ .Values.api.tag }}"
+          name: {{ .Values.api.appname }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.appsVars.appPortApi }}
+              containerPort: {{ .Values.api.port }}
               protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameApi }}
-  name: {{ .Values.appsVars.appNameApi }}
+    app: {{ .Values.api.appname }}
+  name: {{ .Values.api.appname }}
 spec:
   ports:
-  - port: {{ .Values.appsVars.appPortApi }}
+  - port: {{ .Values.api.port }}
     protocol: TCP
-    targetPort: {{ .Values.appsVars.appPortApi }}
+    targetPort: {{ .Values.api.port }}
   selector:
-    app: {{ .Values.appsVars.appNameApi }}
+    app: {{ .Values.api.appname }}
   type: ClusterIP

@@ -1,18 +1,21 @@
 replicaCount: 1
-appsVars:
-  appNameMongo: mongo
-  appNameFront: front
-  appNameApi: api
-  appPortMongo: 27017
-  appPortFront: 80
-  appPortApi: 80
-appsImages:
-  appRepoMongo: mongo
-  appRepoTagMongo: latest
-  appRepoFront: otomato/maskshop-front
-  appRepoTagFront: latest
-  appRepoApi: otomato/maskshop-api
-  appRepoTagApi: latest
+
+mongo:
+  appname: mongo
+  image: mongo
+  tag: latest
+  port: 27017
+api:
+  appname: api
+  image: otomato/maskshop-api
+  tag: latest
+  port: 80
+front:
+  appname: front
+  image: otomato/maskshop-front
+  tag: latest
+  port: 80
+
 image:
   pullPolicy: IfNotPresent
 imagePullSecrets: []

@@ -2,40 +2,40 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameFront }}
-  name: {{ .Values.appsVars.appNameFront }}
+    app: {{ .Values.front.appname }}
+  name: {{ .Values.front.appname }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.appsVars.appNameFront }}
+      app: {{ .Values.front.appname }}
   template:
     metadata:
       annotations:
       labels:
-        app: {{ .Values.appsVars.appNameFront }}
+        app: {{ .Values.front.appname }}
     spec:
       containers:
-        - image: "{{ .Values.appsImages.appRepoFront }}:{{ .Values.appsImages.appRepoTagFront }}"
-          name: {{ .Values.appsVars.appNameFront }}
+        - image: "{{ .Values.front.image }}:{{ .Values.front.tag }}"
+          name: {{ .Values.front.appname }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.appsVars.appPortFront }}
+              containerPort: {{ .Values.front.port }}
               protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameFront }}
-  name: {{ .Values.appsVars.appNameFront }}
+    app: {{ .Values.front.appname }}
+  name: {{ .Values.front.appname }}
 spec:
   ports:
-  - port: {{ .Values.appsVars.appPortFront }}
+  - port: {{ .Values.front.port }}
     protocol: TCP
-    targetPort: {{ .Values.appsVars.appPortFront }}
+    targetPort: {{ .Values.front.port }}
   selector:
-    app: {{ .Values.appsVars.appNameFront }}
+    app: {{ .Values.front.appname }}
   type: NodePort
 

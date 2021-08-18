@@ -2,39 +2,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameMongo }}
-  name: {{ .Values.appsVars.appNameMongo }}
+    app: {{ .Values.mongo.appname }}
+  name: {{ .Values.mongo.appname }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.appsVars.appNameMongo }}
+      app: {{ .Values.mongo.appname }}
   template:
     metadata:
       annotations:
       labels:
-        app: {{ .Values.appsVars.appNameMongo }}
+        app: {{ .Values.mongo.appname }}
     spec:
       containers:
-        - image: "{{ .Values.appsImages.appRepoMongo }}:{{ .Values.appsImages.appRepoTagMongo }}"
-          name: {{ .Values.appsVars.appNameMongo }}
+        - image: "{{ .Values.mongo.image }}:{{ .Values.mongo.tag }}"
+          name: {{ .Values.mongo.appname }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.appsVars.appPortMongo }}
+              containerPort: {{ .Values.mongo.port }}
               protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{ .Values.appsVars.appNameMongo }}
-  name: {{ .Values.appsVars.appNameMongo }}
+    app: {{ .Values.mongo.appname }}
+  name: {{ .Values.mongo.appname }}
 spec:
   ports:
-  - port: {{ .Values.appsVars.appPortMongo }}
+  - port: {{ .Values.mongo.port }}
     protocol: TCP
-    targetPort: {{ .Values.appsVars.appPortMongo }}
+    targetPort: {{ .Values.mongo.port }}
   selector:
-    app: {{ .Values.appsVars.appNameMongo }}
+    app: {{ .Values.mongo.appname }}
   type: ClusterIP
